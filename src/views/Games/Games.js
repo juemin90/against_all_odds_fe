@@ -14,11 +14,14 @@ export default {
   data() {
     return {
       loading: false,
-      date: moment().subtract(1).format('YYYY-MM-DD'),
+      date: moment().subtract(1, 'days').format('YYYY-MM-DD'),
       total: 0,
       current_page: 1,
       size: 10,
       games_columns: [{
+        title: '比赛ID',
+        key: 'game_id',
+      }, {
         title: '时间',
         key: 'time',
       }, {
@@ -27,6 +30,17 @@ export default {
       }, {
         title: '球队',
         key: 'teams',
+        render: (h, params) => h('a', {
+          style: {
+            textDecoration: 'underline',
+          },
+          on: {
+            click: () => {
+              this.handleLink(params.row);
+              // console.log(params.row);
+            },
+          },
+        }, params.row[params.column.key]),
       }, {
         title: '上半场比分',
         key: 'half_time_scores',
@@ -41,6 +55,10 @@ export default {
     this.getGames();
   },
   methods: {
+    handleLink(row) {
+      const { game_id } = row;
+      this.$router.push(`game/${game_id}`);
+    },
     changeDate(date) {
       this.date = date;
       this.getGames();
@@ -63,7 +81,7 @@ export default {
     getGames() {
       this.loading = true;
       const params = this.getParams();
-      console.log('params', params);
+      console.log(this.$route);
       axios.get(api.GET_GAMES, { params }).then((res) => {
         this.loading = false;
         const { data, page } = res.data.data;
@@ -76,6 +94,7 @@ export default {
     },
     setGamesData(data) {
       this.games_data = data.map(item => ({
+        game_id: item.game_id,
         time: `${item.date} ${item.time}`,
         game_name: item.game_name,
         teams: `${item.home_team} vs ${item.away_team}`,

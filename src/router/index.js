@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Games from '../views/Games/Games.vue';
+import Game from '../views/Game/Game.vue';
 import HalfPredict from '../views/HalfPredict/HalfPredict.vue';
 
 Vue.use(VueRouter);
@@ -24,6 +25,11 @@ const routes = [
     path: '/games',
     name: 'games',
     component: Games,
+  },
+  {
+    path: '/game/:game_id',
+    name: 'game',
+    component: Game,
   },
   {
     path: '/half_predict',

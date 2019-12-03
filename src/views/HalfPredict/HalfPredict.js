@@ -16,9 +16,6 @@ export default {
         title: '状态',
         key: 'game_last_time',
       }, {
-        title: '标本数量',
-        key: 'sample_number',
-      }, {
         title: '半场比分',
         key: 'half_score',
       }, {
@@ -30,15 +27,23 @@ export default {
       }, {
         title: '主队胜概率',
         key: 'home_win',
+        sortable: true,
       }, {
         title: '客队胜概率',
         key: 'away_win',
+        sortable: true,
       }, {
         title: '大球概率',
         key: 'high_goal',
+        sortable: true,
       }, {
         title: '小球概率',
         key: 'low_goal',
+        sortable: true,
+      }, {
+        title: '标本数量',
+        key: 'sample_number',
+        sortable: true,
       }],
       games_data: [],
     };
@@ -47,6 +52,19 @@ export default {
     this.getHalfPredicts();
   },
   methods: {
+    rowClassName(row) {
+      const {
+        home_win, away_win, high_goal, low_goal,
+      } = row;
+      const max_value = Math.max(home_win, away_win, high_goal, low_goal);
+      let class_name = '';
+      if (max_value > 90) class_name = 'very high';
+      else if (max_value > 80) class_name = 'mid_high';
+      else if (max_value > 70) class_name = 'mid';
+      else if (max_value > 60) class_name = 'normal';
+      else class_name = 'low';
+      return class_name;
+    },
     getParams() {
       return {};
     },

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <MenuBar></MenuBar>
     <router-view/>
   </div>
 </template>
@@ -26,3 +27,11 @@
   }
 }
 </style>
+
+<script>
+import MenuBar from '../components/MenuBar/MenuBar.vue';
+
+export default {
+  components: { MenuBar },
+};
+</script>

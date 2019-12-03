@@ -5,7 +5,8 @@
 </Row>
 <Row>
 <Card>
-  <Table :columns="games_columns" :data="games_data" :loading="loading" >
+  <Table :columns="games_columns" :data="games_data"
+  :loading="loading" :row-class-name="rowClassName" >
   </Table>
 </Card>
 </Row>
