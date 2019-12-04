@@ -7,8 +7,10 @@
     </Card>
     <Card>
     <RadioGroup v-model="odds_type" type="button" @on-change="changeOddsType">
-        <Radio label="让球"></Radio>
-        <Radio label="大小"></Radio>
+        <Radio label="全场让球"></Radio>
+        <Radio label="全场大小"></Radio>
+        <Radio label="半场让球"></Radio>
+        <Radio label="半场大小"></Radio>
     </RadioGroup>
     </Card>
     <Card>

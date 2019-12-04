@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       game: {},
-      odds_type: '让球',
+      odds_type: '全场让球',
       echart_key: [],
       // echart_value: [],
       echart_data: [],
@@ -24,7 +24,7 @@ export default {
       const options = {
         tooltip: {},
         legend: {
-          data: ['大球', '小球', '大小球'],
+          data: ['主胜', '客胜', '让球', '大球', '小球', '大小球'],
         },
         xAxis: { data: data.odds.map(odd => odd.game_last_time) },
         yAxis: {},
@@ -49,7 +49,7 @@ export default {
     },
     getEchartsData(data) {
       let echart_data;
-      if (this.odds_type === '让球') {
+      if (this.odds_type === '全场让球') {
         echart_data = [{
           name: '让球',
           type: 'line',
@@ -66,7 +66,7 @@ export default {
           data: data.odds.map(odd => odd.full_handicap_away_odd),
           markArea: { data: this.getMarkArea(data.goal_events) },
         }];
-      } else if (this.odds_type === '大小') {
+      } else if (this.odds_type === '全场大小') {
         echart_data = [{
           name: '大小球',
           type: 'line',
@@ -81,6 +81,40 @@ export default {
           name: '小球',
           type: 'line',
           data: data.odds.map(odd => odd.full_goal_low_odd),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }];
+      } else if (this.odds_type === '半场让球') {
+        echart_data = [{
+          name: '让球',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_handicap_goal),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }, {
+          name: '主胜',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_handicap_home_odd),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }, {
+          name: '客胜',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_handicap_away_odd),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }];
+      } else if (this.odds_type === '半场大小') {
+        echart_data = [{
+          name: '大小球',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_goal),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }, {
+          name: '大球',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_goal_high_odd),
+          markArea: { data: this.getMarkArea(data.goal_events) },
+        }, {
+          name: '小球',
+          type: 'line',
+          data: data.odds.map(odd => odd.half_goal_low_odd),
           markArea: { data: this.getMarkArea(data.goal_events) },
         }];
       }
